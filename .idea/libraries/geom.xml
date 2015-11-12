@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="geom">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/out/artifacts/geom_jar/geom.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
