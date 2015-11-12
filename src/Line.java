@@ -2,7 +2,13 @@ import static java.lang.Math.abs;
 import static java.lang.Math.pow;
 import static java.lang.Math.sqrt;
 
-public class Primitives {
+/*
+    Класс взаимосвязан с подклассами наследованием(class Circle)
+     и агрегацией(class Triangle, class Rectangle).
+     Подклассы взаимосвязаны агрегацией.
+     */
+public class Line {
+
   // функция и аргумент
      Double function;
      Double x;
@@ -19,33 +25,6 @@ public class Primitives {
      Double a;
      Double b;
     Boolean isx_const = false;
-     // конструктор
-       // public Primitives(){}
-    // тестировщик
-    public static void main(String[] args) {
-        // новый объет
-     Primitives primitives = new Primitives();
-     Primitives primitives1 = new Primitives();
-        // задание координат
-        primitives.set_points  (1.0, 1.0,   1.0, -1.0);
-        primitives1.set_points (1.0, -2.0,    4.0, 0.0);
-   // координаты произвольной точки
-        Double x = 1.25;
-        Double y = 1.0;
-  // проверка принадлежит ли точка линии
-        boolean b = primitives.membership_point(x,y);
-        boolean b1 = primitives1.membership_point(x,y);
-        if (b) System.out.println("membership of point is true  " +  "F = " + primitives.function + ", x = " + primitives.x + ", a =  " + primitives.a + ", b = " + primitives.b);
-        else System.out.println("membership of point is false  " +  "F = " + primitives.function + ", x = " + primitives.x + ", a =  " + primitives.a + ", b = " + primitives.b);
-        if (b1) System.out.println("membership of point is true  " +  "F = " + primitives1.function + ", x = " + primitives1.x + ", a =  " + primitives1.a + ", b = " + primitives1.b);
-        else System.out.println("membership of point is false  " +  "F = " + primitives1.function + ", x = " + primitives1.x + ", a =  " + primitives1.a + ", b = " + primitives1.b);
-   // проверка пересекаются ли линии
-       Object[] ob =  primitives1.intersection(primitives);
-        System.out.println(ob[0] + " " + ob[1] + " " + ob[2]);
-        System.out.println(primitives1.function_definition(2.0));
-
-    }
-// дальше идут методы класса
 
  // метод устанавливает координаты двух точек
     public void set_points (Double x1,Double y1,Double x2, Double y2){
@@ -74,7 +53,7 @@ public class Primitives {
     }
 
  // метод определяет пересекаются ли линии и точку пересечения
-     Object[] intersection(Primitives primitives){ // тестить метод!
+     Object[] intersection(Line primitives){ // тестить метод!
         Object[] objects = new Object[3];
         Double x = (primitives.b-b)/(a -primitives.a);
         Double y = x*a +b;
@@ -92,31 +71,9 @@ public class Primitives {
 
 }
 
-class Circle extends Primitives{
+class Circle extends Line {
 
     Double function1;
-
-    public static void main(String[] args) {
-        Circle c = new Circle();
-        c.set_points(1.0,1.0,1.0);
-        Circle c1 = new Circle();
-        c1.set_points(1.0,-1.0,1.0);
-        Double point_x = 4.0;
-
-        Object[]ff = c.function_definition_c(point_x);
-        System.out.println("in point x = " + point_x + " function = " + ff[1] + " " + ff[2] + " " + ff[0]);
-        // координаты произвольной точки
-        Double x = 10.0;
-        Double y = 10.0;
-        // проверка принадлежит ли точка линии
-        boolean b = c.membership_point(x,y);
-        if (b) System.out.println("membership of point is true  " +  "F = " + c.function + ", x = " + c.x + ", r =  " + c.r );
-        else System.out.println("membership of point is false  " +  "F = " + c.function + ", x = " + c.x + ", r =  " + c.r );
-
-        Object[] intrs = c.circles_intersection(c1);  // массив хранящий в себе данные о пересечении двух окружностей с и с1
-         System.out.println("x1 = " + intrs[1] + " y1 = " + intrs[2] + " x2 = " + intrs[3] + " y2 = " + intrs[4]);
-
-    }
 
     public void set_points(Double r,Double x_center,Double y_center){
         this.r = abs(r); this.x_center = x_center; this.y_center = y_center;
@@ -164,7 +121,7 @@ class Circle extends Primitives{
         return intersect;
     }
 
-    public Object[] intersection_with_line(Primitives line){
+    public Object[] intersection_with_line(Line line){
         Object[] ob = new Object[5];
         Double C = (2.0*y_center*line.b - pow(x_center,2.0) + pow(r,2.0) - pow(line.b,2.0) - pow(y_center,2.0))*(-1.0);
         Double A = 1.0 + pow(line.a,2.0);
@@ -183,60 +140,7 @@ class Circle extends Primitives{
 
 class Triangle {
     private Double x1,y1,x2,y2,x3,y3;
-   private Primitives line1,line2,line3;
-
-    public static void main(String[] args){
-        Double x1 = -3.0;
-        Double y1 = 0.0;
-        Double x2 = 3.0;
-        Double y2 = 0.0;
-        Double x3 = 0.0;
-        Double y3 = 3.0;
-
-        Double x11 = -1.0;
-        Double y11 = 1.0;
-        Double x22 = 0.0;
-        Double y22 = -1.0;
-        Double x33 = 1.0;
-        Double y33 = 1.0;
-                                          Double x0 = 1.0;
-                                          Double y0 = -2.0; // произвольная точка
-
-        Circle c = new Circle();
-        Triangle t = new Triangle();
-        Triangle t1 = new Triangle();
-        c.set_points(2.5,0.0,0.0);
-        t.set_points(x1,y1,x2,y2,x3,y3);
-        t1.set_points(x11,y11,x22,y22,x33,y33);
-       Object[][] t_with_c = t.trianle_intersection_with_circle(c);
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 5; j++) {
-                System.out.println(t_with_c[i][j]);
-
-            }
-        }
-
-       /* Primitives line = new Primitives(); line.set_points(-1.0,0.0,2.0,-2.0);
-        Object[][] ob = t.trianle_intersection_with_line(line);
-
-        System.out.println( ob[0][0] + "  " + ob[0][1] + "  " + ob[0][2] );
-        System.out.println( ob[1][0] + "  " + ob[1][1] + "  " + ob[1][2] );
-        System.out.println( ob[2][0] + "  " + ob[2][1] + "  " + ob[2][2] );
-
-       Object obb[][] = t1.trianles_intersection(t);
-        for(int i = 0; i < 9; i++){
-            for (int k = 0; k < 3; k++){
-                System.out.println( obb[i][k]);
-
-            }
-        }*/
-
-
-
-
-
-    }
-
+   private Line line1,line2,line3;
 
     public void set_points(Double x1,Double y1,Double x2, Double y2,Double x3,Double y3){
         this.x1 = x1;
@@ -245,9 +149,9 @@ class Triangle {
         this.y2 = y2;
         this.x3 = x3;
         this.y3 = y3;
-        line1 = new Primitives();  line1.set_points(x1,y1,x2,y2);
-        line2 = new Primitives();  line2.set_points(x1,y1,x3,y3);
-        line3 = new Primitives();  line3.set_points(x2,y2,x3,y3);
+        line1 = new Line();  line1.set_points(x1,y1,x2,y2);
+        line2 = new Line();  line2.set_points(x1,y1,x3,y3);
+        line3 = new Line();  line3.set_points(x2,y2,x3,y3);
 
     }
 
@@ -312,7 +216,7 @@ class Triangle {
         Object[][] triangle_w_circle = new Object[3][5];   // содержание строки: 0- пересекает ли окр. сторону треуг.; 1- x1; 2- y1; 3- x2; 4- y2;
         for (int i = 0; i < 3; i++)
         {for (int k = 0; k < 5; k++) { if(k==0) triangle_w_circle[i][k] = false; else triangle_w_circle[i][k] = -0.0; }}  // заполнение массива пустыми значениями
-          Primitives line = new Primitives();
+          Line line = new Line();
         for(int l = 0; l < 3; l++){
             if(l == 0) { line = line1;}
             if(l == 1) { line = line2;}
@@ -328,7 +232,7 @@ class Triangle {
         return triangle_w_circle;
     }
 
-    public Object[][] trianle_intersection_with_line(Primitives line){
+    public Object[][] trianle_intersection_with_line(Line line){
         Object[][] ob = new Object[3][3];   ob[0][0]=false;
           Object[] ob1 = new Object[3];
           Object[] ob2 = new Object[3];
@@ -368,29 +272,7 @@ class Triangle {
 
 class Rectangle{
     private Double x1,y1,x2,y2;
-    private  Primitives line1,line2,line3,line4;
-
-    public static void main(String[] args)
-    {
-        Rectangle r = new Rectangle(); r.setPoints(1.0,1.0,-1.0,-1.0);
-        Rectangle r2 = new Rectangle(); r2.setPoints(1.5,1.5,1.5,1.5);
-        Primitives line = new Primitives(); line.set_points(1.5,0.5,1.5,-0.5);
-        Triangle t = new Triangle(); t.set_points(0.0,3.0,0.5,-2.0,-0.5,-2.0);
-        Circle c = new Circle(); c.set_points(2.0,1.0,1.0);
-        Object[][] c_R = r.intrsc_Rect_Circle(c);
-        Object[] ob = r.intrsc_Line(line);
-        Object[][][] tri_rec = r.intrsc_Rect_Triangle(t);
-        Object[][] rec_rec = r.intrsc_Rect_Rect(r2);
-        /*for (int i = 0; i < 9; i++) {
-            System.out.println(ob[i]);
-        }*/
-       /* for (int i = 0; i < 4; i++) {for (int k = 0; k < 3; k++) {for (int j = 0; j < 3; j++) { System.out.println(tri_rec[i][k][j]);
-        }}}*/
-       /* for (int i = 0; i < 4; i++){for (int k = 0; k < 9; k++){System.out.println(rec_rec[i][k]);
-        }}*/
-        for (int i = 0; i < 4; i++) { for (int k = 0; k < 5; k++) {System.out.println(c_R[i][k]);}}
-
-    }
+    private Line line1,line2,line3,line4;
 
     public void setPoints(Double x1, Double y1, Double x2,Double y2){
         this.x1 = x1;
@@ -401,10 +283,10 @@ class Rectangle{
     }
 
     private void createRect(){
-       line1 = new Primitives(); line1.set_points(x1,y1,x1,y2);  // вертикальная линия
-       line2 = new Primitives(); line2.set_points(x2,y2,x2,y1);  // вертикальная линия
-       line3 = new Primitives(); line3.set_points(x1,y2,x2,y2);  // горизонтальная линия
-       line4 = new Primitives(); line4.set_points(x1,y1,x2,y1);  // горизонтальная линия
+       line1 = new Line(); line1.set_points(x1,y1,x1,y2);  // вертикальная линия
+       line2 = new Line(); line2.set_points(x2,y2,x2,y1);  // вертикальная линия
+       line3 = new Line(); line3.set_points(x1,y2,x2,y2);  // горизонтальная линия
+       line4 = new Line(); line4.set_points(x1,y1,x2,y1);  // горизонтальная линия
     }
 
     private boolean membership_point1(Double x,Double y){
@@ -455,9 +337,9 @@ class Rectangle{
         else return false;
     }
 
-    public Object[] intrsc_Line(Primitives line){
+    public Object[] intrsc_Line(Line line){
         Object intersect[] = new Object[9];    intersect[0] = false;   for (int i = 1; i < 9; i++) {intersect[i] = -0.0;}
-        Primitives thisline = new Primitives();
+        Line thisline = new Line();
         int num =1;
         for(int i = 0; i < 4; i++) {
             if(i==0){ thisline = line1;}
@@ -477,7 +359,7 @@ class Rectangle{
 
     public Object[][][] intrsc_Rect_Triangle(Triangle t){
         Object[][][]intrR_T = new Object[4][3][3];
-        Primitives thisline = new Primitives();
+        Line thisline = new Line();
 
         for(int i = 0; i < 4; i++){for(int k = 0; k < 3; k++){for(int j = 0; j < 3; j++)
         {intrR_T[i][k][j] = -0.0; if(j==0)intrR_T[i][k][j] = false;}}}
@@ -500,7 +382,7 @@ class Rectangle{
 
     public Object[][] intrsc_Rect_Rect(Rectangle r){
         Object[][]intrR_R = new Object[4][9];
-        Primitives thisline = new Primitives();
+        Line thisline = new Line();
 
         for(int i = 0; i < 4; i++){for(int k = 0; k < 9; k++){
         intrR_R[i][k] = -0.0; if(k==0)intrR_R[i][k] = false;}}
@@ -528,7 +410,7 @@ return intrR_R;
 
     public Object[][] intrsc_Rect_Circle(Circle c){
         Object[][]r_C = new Object[4][5];  for (int i = 0; i < 4; i++){for (int k = 0; k < 5; k++){   r_C[i][k] = -0.0; if(k==0){r_C[i][k] = false;} }}
-            Primitives thisline = new Primitives();
+            Line thisline = new Line();
         for(int i = 0; i < 4; i++) {
             if(i==0){ thisline = line1;}
             if(i==1){thisline = line2;}

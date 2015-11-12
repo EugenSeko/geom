@@ -5,10 +5,13 @@ import java.io.InputStreamReader;
 /**
  * Created by y on 03.09.2015.
  */
+//TODO: исключить возможность ввода отрицательного значения радиуса
+// TODO: исключить появление NaN в выводе на экран.
+// TODO: исключить возможность ввода кириллических символов или расширить контекст.
 public class Console_in_out {
 
 // поля объектов геометрических фигур
-    private static Primitives line1,line2;
+    private static Line line1,line2;
     private static Circle circle1,circle2;
     private static Triangle triangle1,triangle2;
     private static Rectangle rectangle1,rectangle2;
@@ -45,7 +48,8 @@ public class Console_in_out {
     static void setPoints(String s){
         inters += s;
         Double x1,y1,x2,y2,x3,y3,r;
-        if(s.equals("l")){Primitives line = new Primitives();
+        if(s.equals("l")){
+            Line line = new Line();
             System.out.println("прямая линия");
             System.out.println("Введите x1");x1 =input_double();
             System.out.println("Введите y1");y1 =input_double();
