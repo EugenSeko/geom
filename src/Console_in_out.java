@@ -6,17 +6,26 @@ import java.io.InputStreamReader;
  * Created by y on 03.09.2015.
  */
 public class Console_in_out {
-    private static int i=0;
+
+// поля объектов геометрических фигур
     private static Primitives line1,line2;
     private static Circle circle1,circle2;
     private static Triangle triangle1,triangle2;
     private static Rectangle rectangle1,rectangle2;
+// вспомогательные поля методов
+    private static int i=0;
     private static String s = "";
     private static String inters = "";
     private static boolean b,b1,b2,b3 = false;
 
-
+//---------------------управление-----------------
+    // точка входа
     public static void main(String[] args) throws IOException {
+       programmRun();
+    }
+
+    // метод управления программой
+    static void programmRun() throws IOException {
         System.out.println("Программа находит точки пересечения между простыми геометрическими фигурами");
 
         while(!s.equals("E") | !s.equals("e")) {
@@ -28,12 +37,55 @@ public class Console_in_out {
                 s = input_str(); setPoints(s);
             }
             figureIntersection(inters);  inters = ""; b=b3=b2=b3=false;
-
-
         }
     }
 
-  static void figureIntersection(String s){
+//---------------------установка параметров и вычисление------------
+    // метод устанавливает параметры геометрических фигур, т.е. соответствующие поля объектов классов.
+    static void setPoints(String s){
+        inters += s;
+        Double x1,y1,x2,y2,x3,y3,r;
+        if(s.equals("l")){Primitives line = new Primitives();
+            System.out.println("прямая линия");
+            System.out.println("Введите x1");x1 =input_double();
+            System.out.println("Введите y1");y1 =input_double();
+            System.out.println("Введите x2");x2 =input_double();
+            System.out.println("Введите y2");y2 =input_double();
+            line.set_points(x1,y1,x2,y2);
+            if(i==0){line1 = line; b = true;}
+            if(i==1) {if(b) line2 = line; if(!b){ line1 = line;}}}
+        if(s.equals("c")){ Circle circle = new Circle();
+            System.out.println("круг");
+            System.out.println("Введите координату центра x");x1 =input_double();
+            System.out.println("Введите координату центра y");y1 =input_double();
+            System.out.println("Введите значение величины радиуса");r =input_double();
+            circle.set_points(r,x1,y1);
+            if(i==0){circle1 = circle; b1 = true;}
+            if(i==1) {if(b1) circle2 = circle; if(!b1){ circle1 = circle;}}}
+        if(s.equals("t")){ Triangle triangle = new Triangle();
+            System.out.println("треугольник");
+            System.out.println("Введите x1");x1 =input_double();
+            System.out.println("Введите y1");y1 =input_double();
+            System.out.println("Введите x2");x2 =input_double();
+            System.out.println("Введите y2");y2 =input_double();
+            System.out.println("Введите x3");x3 =input_double();
+            System.out.println("Введите y3");y3 =input_double();
+            triangle.set_points(x1,y1,x2,y2,x3,y3);
+            if(i==0){triangle1 = triangle; b2 = true;}
+            if(i==1) {if(b2) triangle2 = triangle; if(!b2){ triangle1 = triangle;}}}
+        if(s.equals("r")){ Rectangle rectangle = new Rectangle();
+            System.out.println("прямоугольник: координаты диагонали");
+            System.out.println("Введите x1");x1 =input_double();
+            System.out.println("Введите y1");y1 =input_double();
+            System.out.println("Введите x2");x2 =input_double();
+            System.out.println("Введите y2");y2 =input_double();
+            rectangle.setPoints(x1,y1,x2,y2);
+            if(i==0){rectangle1 = rectangle; b3 = true;}
+            if(i==1) {if(b3) rectangle2= rectangle; if(!b3){ rectangle1 = rectangle;}}}
+    }
+
+    // метод вычисляет точки пересечения фигур по контексту строки s.
+    static void figureIntersection(String s){
       if(s.equals("ll")){Object[] ob  = line1.intersection(line2);
          toScreen(ob); }
       if(s.equals("lc") | s.equals("cl")){ Object[] ob  = circle1.intersection_with_line(line1);
@@ -61,48 +113,9 @@ public class Console_in_out {
 
   }
 
-   static void setPoints(String s){
-       inters += s;
-       Double x1,y1,x2,y2,x3,y3,r;
-       if(s.equals("l")){Primitives line = new Primitives();
-           System.out.println("прямая линия");
-           System.out.println("Введите x1");x1 =input_double();
-           System.out.println("Введите y1");y1 =input_double();
-           System.out.println("Введите x2");x2 =input_double();
-           System.out.println("Введите y2");y2 =input_double();
-           line.set_points(x1,y1,x2,y2);
-           if(i==0){line1 = line; b = true;}
-           if(i==1) {if(b) line2 = line; if(!b){ line1 = line;}}}
-       if(s.equals("c")){ Circle circle = new Circle();
-           System.out.println("круг");
-           System.out.println("Введите координату центра x");x1 =input_double();
-           System.out.println("Введите координату центра y");y1 =input_double();
-           System.out.println("Введите значение величины радиуса");r =input_double();
-           circle.set_points(r,x1,y1);
-           if(i==0){circle1 = circle; b1 = true;}
-           if(i==1) {if(b1) circle2 = circle; if(!b1){ circle1 = circle;}}}
-       if(s.equals("t")){ Triangle triangle = new Triangle();
-           System.out.println("треугольник");
-           System.out.println("Введите x1");x1 =input_double();
-           System.out.println("Введите y1");y1 =input_double();
-           System.out.println("Введите x2");x2 =input_double();
-           System.out.println("Введите y2");y2 =input_double();
-           System.out.println("Введите x3");x3 =input_double();
-           System.out.println("Введите y3");y3 =input_double();
-           triangle.set_points(x1,y1,x2,y2,x3,y3);
-           if(i==0){triangle1 = triangle; b2 = true;}
-           if(i==1) {if(b2) triangle2 = triangle; if(!b2){ triangle1 = triangle;}}}
-       if(s.equals("r")){ Rectangle rectangle = new Rectangle();
-           System.out.println("прямоугольник: координаты диагонали");
-           System.out.println("Введите x1");x1 =input_double();
-           System.out.println("Введите y1");y1 =input_double();
-           System.out.println("Введите x2");x2 =input_double();
-           System.out.println("Введите y2");y2 =input_double();
-           rectangle.setPoints(x1,y1,x2,y2);
-           if(i==0){rectangle1 = rectangle; b3 = true;}
-           if(i==1) {if(b3) rectangle2= rectangle; if(!b3){ rectangle1 = rectangle;}}}
-   }
 
+//---------------------вывод на экран--------------
+    // переполненый метод выводит на экран точки пересечения фигур.
     static void toScreen(Object[]ob){
         int count = 0;
         boolean b;
@@ -140,7 +153,8 @@ public class Console_in_out {
     }
 
 
-
+//---------------------вспомогательные функции-----
+    // метод ввода числа, возвращает введенное в консоли число и перехватывает исключение ввода другого символа.
     public static Double input_double() {
         boolean b = true;
         Double d = 0.0;
@@ -150,17 +164,17 @@ public class Console_in_out {
                 d = Double.parseDouble(reader.readLine());
                 b = false;
             } catch (Exception e) {
-                System.out.println("enter the next number");
+                System.out.println("not a number, try again");
             }
         }
         return d;
     }
 
+    // метод ввода,возвращает строку введеную через консоль
     public static String input_str() throws IOException {
 
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         String s = reader.readLine();
-
         return s;
     }
 }
