@@ -5,7 +5,6 @@ import java.io.InputStreamReader;
 /**
  * Created by y on 03.09.2015.
  */
-//TODO: исключить возможность ввода отрицательного значения радиуса
 // TODO: исключить появление NaN в выводе на экран.
 // TODO: исключить возможность ввода кириллических символов или расширить контекст.
 public class Console_in_out {
@@ -32,7 +31,7 @@ public class Console_in_out {
         System.out.println("Программа находит точки пересечения между простыми геометрическими фигурами");
 
         while(!s.equals("E") | !s.equals("e")) {
-            System.out.println("Запустить программу введите R");
+            System.out.println("Запустить программу нажмите любую клавишу");
             System.out.println("Выйти из программы введите E");
             s = input_str(); if(s.equals("E") | s.equals("e")) break;
             for ( i = 0; i < 2 ; i++) {
@@ -62,7 +61,15 @@ public class Console_in_out {
             System.out.println("круг");
             System.out.println("Введите координату центра x");x1 =input_double();
             System.out.println("Введите координату центра y");y1 =input_double();
-            System.out.println("Введите значение величины радиуса");r =input_double();
+            // исключение ввода отрицательного значения радиуса.-------------
+            r=0.0;
+            while (true){
+                System.out.println("Введите значение величины радиуса");
+                r =input_double();
+                if(r>0){break;} else {System.out.println
+                        ("Значение радиуса не может быть отрицательным числом или нулем!");}
+                }
+            //-----------------------
             circle.set_points(r,x1,y1);
             if(i==0){circle1 = circle; b1 = true;}
             if(i==1) {if(b1) circle2 = circle; if(!b1){ circle1 = circle;}}}
@@ -160,25 +167,19 @@ public class Console_in_out {
 //---------------------вспомогательные функции-----
     // метод ввода числа, возвращает введенное в консоли число и перехватывает исключение ввода другого символа.
     public static Double input_double() {
-        boolean b = true;
-        Double d = 0.0;
-        while (b) {
+        while (true) {
             try {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-                d = Double.parseDouble(reader.readLine());
-                b = false;
+                return Double.parseDouble(reader.readLine());
             } catch (Exception e) {
                 System.out.println("not a number, try again");
             }
         }
-        return d;
     }
 
     // метод ввода,возвращает строку введеную через консоль
     public static String input_str() throws IOException {
-
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        String s = reader.readLine();
-        return s;
+        return reader.readLine();
     }
 }
